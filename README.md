@@ -14,6 +14,10 @@
 
 This E2E testing suite validates the complete functionality of the NutriStats web application, ensuring reliable performance for professional athletes and sports nutrition professionals. The framework uses modern testing practices with the Page Object Model pattern and comprehensive test coverage.
 
+**🚀 Fully Automated**: GitHub Actions automatically run all tests on every code change, providing instant feedback and detailed HTML reports.
+
+**✅ Production Ready**: Currently running 25+ tests with 100% pass rate, covering authentication, food management, weight tracking, and core user workflows.
+
 ## 🔗 Related Project
 
 **Main Application:** [NutriStats - Pro Athlete Nutrition Planning & Analytics Platform](https://github.com/TomerTTB/NutriStats)
@@ -188,7 +192,37 @@ AUTH_STRATEGY=jwt npx playwright test
 
 ## 🧪 Running Tests
 
-### Basic Test Execution
+### 🚀 GitHub Actions (Automated Testing)
+
+The repository is configured with GitHub Actions that automatically run tests on every push to the main branch. 
+
+**✅ Current Status**: All 25 tests passing with comprehensive coverage!
+
+#### 📊 Accessing Test Reports
+
+After each GitHub Actions run, you can access detailed HTML reports:
+
+1. **Go to Actions Tab**: Visit the [Actions page](https://github.com/TomerTTB/nutri-stats-e2e-playwright/actions)
+2. **Select a Workflow Run**: Click on any completed test run
+3. **Download Reports**: In the "Artifacts" section, look for:
+   - 📊 **`html-report-[run-number]`** - Interactive HTML report (Recommended)
+   - 📥 **`playwright-report-[run-number]`** - Complete test artifacts
+
+4. **View Report**: Extract the downloaded zip and open `index.html` in your browser
+
+![E2E Test Results Summary](https://github.com/TomerTTB/nutri-stats-e2e-playwright/blob/main/docs/test-summary-example.png)
+
+#### 🎯 What's in the HTML Report:
+- **Test Results Overview**: Pass/fail summary with percentages
+- **Interactive Timeline**: Visual test execution flow
+- **Screenshots**: Automatic capture of each test step
+- **Videos**: Recordings of test execution (especially failures)
+- **Traces**: Detailed debugging information
+- **Filtering Options**: Filter by status, browser, test file
+
+### 💻 Local Development Testing
+
+#### Basic Test Execution
 ```bash
 # Run all tests (uses AUTH_STRATEGY from .env.test)
 npm test
@@ -201,9 +235,12 @@ npm run test:ui
 
 # Run tests in debug mode
 npm run test:debug
+
+# Run single test for quick verification
+npm run test:single:headed
 ```
 
-### Authentication-Specific Test Runs
+#### Authentication-Specific Test Runs
 ```bash
 # Run with UI-Login (visible authentication)
 AUTH_STRATEGY=ui-login npm test
@@ -218,7 +255,7 @@ npx playwright test tests/diary/food-search.spec.js
 npx playwright test tests/auth-method-verification.spec.js
 ```
 
-### Specialized Test Runs
+#### Specialized Test Runs
 ```bash
 # Run tests with automatic cleanup
 npm run test:safe
@@ -230,9 +267,9 @@ npm run test:no-clean
 npm run artifacts:clean:all && npm test
 ```
 
-### Test Reports & Artifacts
+#### Local Test Reports & Artifacts
 ```bash
-# View HTML test report
+# View HTML test report (after local run)
 npm run test:report
 
 # View artifact statistics
@@ -247,10 +284,22 @@ npm run artifacts:clean -- --screenshots --videos
 
 ## ⚡ **Quick Reference**
 
-### **Most Common Commands**
+### **🚀 GitHub Actions (Recommended)**
+```bash
+# Automatic testing on every push to main branch
+# No setup required - just push your changes!
+
+# Manual trigger: Go to Actions tab → E2E Tests → Run workflow
+# View results: Actions tab → Select run → Download html-report artifact
+```
+
+### **💻 Local Development Commands**
 ```bash
 # Run all tests with UI-Login (visible authentication)
 npm test
+
+# Run single test for quick verification
+npm run test:single:headed
 
 # Run all tests with JWT (fast authentication)
 AUTH_STRATEGY=jwt npm test
@@ -258,7 +307,7 @@ AUTH_STRATEGY=jwt npm test
 # Run specific test file
 npx playwright test tests/diary/food-search.spec.js
 
-# View test report
+# View test report (after local run)
 npm run test:report
 
 # Clean artifacts and run fresh
@@ -268,15 +317,27 @@ npm run artifacts:clean:all && npm test
 DEBUG_AUTH=true npm test
 ```
 
-### **Authentication Method Switching**
+### **🔐 Authentication Method Switching**
 ```bash
-# Switch to UI-Login in .env.test
+# Switch to UI-Login in .env.test (default - visible authentication)
 AUTH_STRATEGY=ui-login
 
-# Switch to JWT in .env.test  
+# Switch to JWT in .env.test (fast token-based authentication)
 AUTH_STRATEGY=jwt
 PERSIST_AUTH_STATE=true
 AUTH_STORAGE_PATH=.auth/user.json
+```
+
+### **📊 Accessing Test Reports**
+```bash
+# GitHub Actions Reports:
+# 1. Go to: https://github.com/TomerTTB/nutri-stats-e2e-playwright/actions
+# 2. Click on any workflow run
+# 3. Download "html-report-[number]" artifact
+# 4. Extract and open index.html
+
+# Local Reports:
+npm run test:report  # Opens local HTML report
 ```
 
 ## 📋 Current Test Coverage
@@ -413,23 +474,41 @@ CLEANUP_MODE=all               # all, selective, old, disabled
 
 ## 📈 Reporting & Analytics
 
-### HTML Reports
-- Visual test results with screenshots
-- Test execution timeline
-- Failure analysis and debugging
-- Performance metrics
+### 🎯 GitHub Actions Integration
 
-### Artifact Management
-- Automatic screenshot capture
-- Video recording on failures
-- Trace collection for debugging
-- Organized artifact storage
+The repository includes a fully configured GitHub Actions workflow that:
 
-### CI/CD Integration
-- GitHub Actions compatibility
-- Docker container support
-- Parallel test execution
-- Automated reporting
+- **🔄 Automatic Execution**: Runs on every push to main branch
+- **🏗️ Environment Setup**: Automatically clones and starts the NutriStats application
+- **🗄️ Database Management**: Uses a dedicated test database with proper schema
+- **📊 Comprehensive Reporting**: Generates detailed HTML reports with screenshots and videos
+- **📦 Artifact Management**: Organizes and uploads test results for easy access
+- **⚡ Fast Feedback**: Provides immediate test results and failure analysis
+
+### 📊 HTML Reports Features
+
+- **Visual Test Results**: Interactive dashboard with pass/fail statistics
+- **Test Execution Timeline**: Visual representation of test flow
+- **Screenshot Capture**: Automatic screenshots of each test step
+- **Video Recording**: Full test execution videos (especially for failures)
+- **Trace Analysis**: Detailed debugging information for failed tests
+- **Performance Metrics**: Test execution timing and performance data
+- **Filtering & Search**: Filter by status, browser, test file, or keywords
+
+### 🗂️ Artifact Management
+
+- **Organized Storage**: Structured artifact directories for easy navigation
+- **Automatic Cleanup**: Configurable cleanup policies to manage storage
+- **Multiple Formats**: HTML, JSON, and JUnit reports for different use cases
+- **Long Retention**: HTML reports kept for 30 days, other artifacts for 7 days
+
+### 🚀 CI/CD Integration
+
+- **GitHub Actions**: Native integration with comprehensive workflow
+- **Automated Testing**: Runs on code changes, pull requests, and manual triggers
+- **Environment Isolation**: Each test run uses a fresh environment and database
+- **Parallel Execution**: Optimized for fast test execution
+- **Failure Analysis**: Detailed reporting and artifact collection for debugging
 
 ## 🤝 Contributing
 
