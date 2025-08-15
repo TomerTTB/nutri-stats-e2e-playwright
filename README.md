@@ -20,20 +20,20 @@ This E2E testing suite validates the complete functionality of the NutriStats we
 
 ## Table of Contents
 
-- [Related Project](#related-project)
-- [Framework Features](#framework-features)
-- [Technology Stack](#technology-stack)
-- [Project Structure](#project-structure)
-- [Authentication Methods](#authentication-methods)
-- [Quick Start](#quick-start)
-- [Running Tests](#running-tests)
-- [Current Test Coverage](#current-test-coverage)
-- [Configuration](#configuration)
-- [Performance Optimization & Playwright Workers](#performance-optimization--playwright-workers)
-- [Test Scenarios](#test-scenarios)
-- [Reporting & Analytics](#reporting--analytics)
-- [Contributing](#contributing)
-- [Debugging & Troubleshooting](#debugging--troubleshooting)
+- [Related Project](#-related-project)
+- [Framework Features](#-framework-features)
+- [Technology Stack](#️-technology-stack)
+- [Project Structure](#-project-structure)
+- [Authentication Methods](#-authentication-methods)
+- [Quick Start](#-quick-start)
+- [Running Tests](#-running-tests)
+- [Current Test Coverage](#-current-test-coverage)
+- [Configuration](#-configuration)
+- [Performance Optimization & Playwright Workers](#-performance-optimization--playwright-workers)
+- [Test Scenarios](#-test-scenarios)
+- [Reporting & Analytics](#-reporting--analytics)
+- [Contributing](#-contributing)
+- [Debugging & Troubleshooting](#-debugging--troubleshooting)
 
 ## 🔗 Related Project
 
