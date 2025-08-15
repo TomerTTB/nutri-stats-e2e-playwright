@@ -90,58 +90,56 @@ The NutriStats application is a comprehensive web-based nutrition tracking and a
 
 ```
 e2e-tests/
-├── auth/                      # 🔐 Authentication system
-│   ├── methods/              # Authentication method implementations
-│   │   ├── jwt-auth-method.js        # JWT token-based authentication
-│   │   ├── ui-login-auth-method.js   # Visible UI login authentication
-│   │   └── login-auth-method.js      # API-based login authentication
-│   ├── factory/              # Authentication method factory
-│   ├── interfaces/           # Authentication interfaces
-│   ├── errors/               # Authentication error handling
-│   └── compatibility/        # Fixture compatibility layer
-├── config/                    # Configuration files
-│   ├── auth-config.js        # Authentication configuration & validation
-│   └── artifact-config.js    # Artifact management settings
-├── data/                      # Test data and database
-│   ├── backups/              # Database backups
-│   └── origin/               # Original test database
-├── fixtures/                  # Test fixtures
-│   └── auth.fixture.js       # Dual authentication fixtures
-├── pages/                     # Page Object Model classes
-│   ├── auth/                 # Authentication pages
-│   ├── base/                 # Base page classes
-│   ├── components/           # Reusable components
-│   ├── diary/                # Meal tracking pages
-│   ├── foods/                # Food management pages
-│   ├── reports/              # Analytics and reports
-│   └── settings/             # User settings pages
-├── scripts/                   # Utility scripts
-│   ├── cleanup-test-data.js  # Data cleanup automation
-│   ├── manage-artifacts.js   # Comprehensive artifact management
-│   └── verify-setup.js       # Setup verification
-├── test-artifacts/            # 📊 Organized test outputs
-│   ├── reports/              # HTML, JSON, and JUnit reports
-│   │   └── html-report/      # Interactive HTML reports
-│   ├── screenshots/          # Test screenshots
-│   ├── traces/               # Playwright debug traces
-│   └── videos/               # Test execution videos
-├── tests/                     # Test specifications
-│   ├── auth/                 # Authentication tests (login, logout, registration)
-│   ├── diary/                # Meal tracking tests (food search, navigation)
-│   ├── foods/                # Food management tests
-│   ├── settings/             # Settings tests
-│   └── weight/               # Weight tracking tests
-├── utils/                     # Essential utility functions
-│   ├── api-helpers.js        # API interaction helpers
-│   ├── data-generators.js    # Test data generation
-│   ├── database-manager.js   # Database operations
-│   └── test-helpers.js       # Screenshot and test utilities
-│   ├── database-manager.js   # Database utilities
-│   └── test-helpers.js       # General test utilities
-├── global-setup.js           # Global test setup
-├── global-teardown.js        # Global test cleanup
-├── playwright.config.js      # Playwright configuration
-└── package.json              # Dependencies and scripts
+├── auth/                         # 🔐 Authentication system
+│   ├── methods/                  # Authentication method implementations
+│   │   ├── jwt-auth-method.js    # JWT token-based authentication
+│   │   ├── ui-login-auth-method.js # Visible UI login authentication
+│   │   └── login-auth-method.js  # API-based login authentication
+│   ├── factory/                  # Authentication method factory
+│   ├── interfaces/               # Authentication interfaces
+│   ├── errors/                   # Authentication error handling
+│   └── compatibility/            # Fixture compatibility layer
+├── config/                       # Configuration files
+│   ├── auth-config.js            # Authentication configuration & validation
+│   └── artifact-config.js        # Artifact management settings
+├── data/                         # Test data and database
+│   ├── backups/                  # Database backups
+│   └── origin/                   # Original test database
+├── fixtures/                     # Test fixtures
+│   └── auth.fixture.js           # Dual authentication fixtures
+├── pages/                        # Page Object Model classes
+│   ├── auth/                     # Authentication pages
+│   ├── base/                     # Base page classes
+│   ├── components/               # Reusable components
+│   ├── diary/                    # Meal tracking pages
+│   ├── foods/                    # Food management pages
+│   ├── reports/                  # Analytics and reports
+│   └── settings/                 # User settings pages
+├── scripts/                      # Utility scripts
+│   ├── cleanup-test-data.js      # Data cleanup automation
+│   ├── manage-artifacts.js       # Comprehensive artifact management
+│   └── verify-setup.js           # Setup verification
+├── test-artifacts/               # 📊 Organized test outputs
+│   ├── reports/                  # HTML, JSON, and JUnit reports
+│   │   └── html-report/          # Interactive HTML reports
+│   ├── screenshots/              # Test screenshots
+│   ├── traces/                   # Playwright debug traces
+│   └── videos/                   # Test execution videos
+├── tests/                        # Test specifications
+│   ├── auth/                     # Authentication tests (login, logout, registration)
+│   ├── diary/                    # Meal tracking tests (food search, navigation)
+│   ├── foods/                    # Food management tests
+│   ├── settings/                 # Settings tests
+│   └── weight/                   # Weight tracking tests
+├── utils/                        # Essential utility functions
+│   ├── api-helpers.js            # API interaction helpers
+│   ├── data-generators.js        # Test data generation
+│   ├── database-manager.js       # Database operations
+│   └── test-helpers.js           # Screenshot and test utilities
+├── global-setup.js               # Global test setup
+├── global-teardown.js            # Global test cleanup
+├── playwright.config.js          # Playwright configuration
+└── package.json                  # Dependencies and scripts
 ```
 
 ## 🔐 **Authentication Methods**
