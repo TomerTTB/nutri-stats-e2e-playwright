@@ -94,6 +94,48 @@ jobs:
           e2e-tests/test-artifacts/
         retention-days: 7
 
+    - name: Deploy HTML Report to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: e2e-tests/test-artifacts/reports/html-report
+        destination_dir: reports/${{ github.run_number }}
+
+    - name: Create Test Summary
+      if: always()
+      run: |
+        cd e2e-tests
+        echo "## 🧪 E2E Test Results - Run #${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        if [ -f "test-artifacts/reports/test-results.json" ]; then
+          # Parse test results
+          TOTAL=$(jq -r '.stats.total // 0' test-artifacts/reports/test-results.json)
+          PASSED=$(jq -r '.stats.expected // 0' test-artifacts/reports/test-results.json)
+          FAILED=$(jq -r '.stats.unexpected // 0' test-artifacts/reports/test-results.json)
+          SKIPPED=$(jq -r '.stats.skipped // 0' test-artifacts/reports/test-results.json)
+          
+          echo "- **Total Tests:** $TOTAL" >> $GITHUB_STEP_SUMMARY
+          echo "- **Passed:** $PASSED ✅" >> $GITHUB_STEP_SUMMARY
+          echo "- **Failed:** $FAILED ❌" >> $GITHUB_STEP_SUMMARY
+          echo "- **Skipped:** $SKIPPED ⏭️" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "$FAILED" -gt 0 ]; then
+            echo "❌ Some tests failed. Check the artifacts for details." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ All tests passed!" >> $GITHUB_STEP_SUMMARY
+          fi
+        else
+          echo "⚠️ Test results file not found" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📊 Reports Available:" >> $GITHUB_STEP_SUMMARY
+        echo "- [📥 Download Artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
+        echo "- [🌐 HTML Report (GitHub Pages)](https://${{ github.repository_owner }}.github.io/nutri-stats-e2e-playwright/reports/${{ github.run_number }}/)" >> $GITHUB_STEP_SUMMARY
+
     - name: Comment PR with test results
       uses: actions/github-script@v7
       if: github.event_name == 'pull_request' && always()
@@ -115,7 +157,9 @@ jobs:
             
             ${stats.unexpected > 0 ? '❌ Some tests failed. Check the artifacts for details.' : '✅ All tests passed!'}
             
-            [View detailed report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})`;
+            ### 📊 Reports:
+            - [📥 Download Artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            - [🌐 HTML Report](https://${{ github.repository_owner }}.github.io/nutri-stats-e2e-playwright/reports/${{ github.run_number }}/)`;
             
             github.rest.issues.createComment({
               issue_number: context.issue.number,
