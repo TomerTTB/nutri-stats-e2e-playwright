@@ -18,6 +18,23 @@ This E2E testing suite validates the complete functionality of the NutriStats we
 
 **✅ Production Ready**: Currently running 282 complete tests with 100% pass rate, covering authentication, food management, weight tracking, and core user workflows.
 
+## 📋 Table of Contents
+
+- [🔗 Related Project](#-related-project)
+- [✨ Framework Features](#-framework-features)
+- [🛠️ Technology Stack](#️-technology-stack)
+- [📁 Project Structure](#-project-structure)
+- [🔐 Authentication Methods](#-authentication-methods)
+- [🚀 Quick Start](#-quick-start)
+- [🧪 Running Tests](#-running-tests)
+- [📋 Current Test Coverage](#-current-test-coverage)
+- [🔧 Configuration](#-configuration)
+- [⚡ Performance Optimization & Playwright Workers](#-performance-optimization--playwright-workers)
+- [🎯 Test Scenarios](#-test-scenarios)
+- [📈 Reporting & Analytics](#-reporting--analytics)
+- [🤝 Contributing](#-contributing)
+- [🔍 Debugging & Troubleshooting](#-debugging--troubleshooting)
+
 ## 🔗 Related Project
 
 **Main Application:** [NutriStats - Pro Athlete Nutrition Planning & Analytics Platform](https://github.com/TomerTTB/NutriStats)
@@ -236,7 +253,7 @@ After each GitHub Actions run, you can access detailed HTML reports:
 
 4. **View Report**: Extract the downloaded zip and open `index.html` in your browser
 
-![E2E Test Results Summary](https://github.com/TomerTTB/nutri-stats-e2e-playwright/blob/main/docs/test-summary-example.png)
+![E2E Test Results Summary](./docs/test-summary-example.png)
 
 #### 🎯 What's in the HTML Report:
 - **Test Results Overview**: Pass/fail summary with percentages
@@ -461,27 +478,27 @@ npm run test:report  # Opens local HTML report
 └─────────────────────┴─────────────────┴─────────────────┴──────────────────┘
 ```
 
-**🎯 Authentication Performance Breakdown:**
+**Authentication Performance Breakdown:**
 - **JWT Token Method**: 
-  - ⚡ **Setup Time**: ~200-300ms (token validation)
-  - 🔄 **Per Test**: ~2-3 seconds total execution
-  - 💾 **Storage**: Reuses saved authentication state
-  - 🚀 **Best For**: CI/CD pipelines, bulk testing
+  - **Setup Time**: ~200-300ms (token validation)
+  - **Per Test**: ~2-3 seconds total execution
+  - **Storage**: Reuses saved authentication state
+  - **Best For**: CI/CD pipelines, bulk testing
 
 - **UI-Login Method**:
-  - 👁️ **Setup Time**: ~5-6 seconds (visible form interaction)
-  - 🔄 **Per Test**: ~7-9 seconds total execution  
-  - 🖱️ **Interaction**: Full email/password form filling
-  - 🐛 **Best For**: Development, debugging, visual verification
+  - **Setup Time**: ~5-6 seconds (visible form interaction)
+  - **Per Test**: ~7-9 seconds total execution  
+  - **Interaction**: Full email/password form filling
+  - **Best For**: Development, debugging, visual verification
 
-**📊 Performance Impact Analysis:**
+**Performance Impact Analysis:**
 - **Individual Test Savings**: 5-6 seconds per test with JWT
 - **Full Suite Savings**: ~24-28 minutes for 282 tests (70% faster)
 - **CI/CD Efficiency**: Reduces GitHub Actions runtime significantly
 - **Developer Productivity**: Faster feedback during development
 - **Resource Usage**: JWT method uses ~40% less CPU/memory
 
-**⏱️ Detailed Timing Breakdown:**
+**Detailed Timing Breakdown:**
 - **Database Operations**: ~500ms per test (consistent across methods)
 - **Screenshot Capture**: ~200-300ms per test step
 - **Video Recording**: ~50MB per failed test
