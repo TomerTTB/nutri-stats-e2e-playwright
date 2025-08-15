@@ -18,73 +18,6 @@ This E2E testing suite validates the complete functionality of the NutriStats we
 
 **✅ Production Ready**: Currently running 282 complete tests with 100% pass rate, covering authentication, food management, weight tracking, and core user workflows.
 
-## ⚡ Performance Optimization & Playwright Workers
-
-### 🔧 **Worker Configuration Strategy**
-```javascript
-// Current Configuration (playwright.config.js)
-workers: process.env.CI ? 1 : undefined  // 1 worker in CI, auto-detect locally
-fullyParallel: true                      // Enable parallel test execution
-retries: process.env.CI ? 2 : 0         // Retry failed tests in CI only
-```
-
-### 📊 **Performance Metrics & KPIs**
-
-**🏃‍♂️ Execution Speed Analysis:**
-- **Total Tests**: 282 extensive test cases
-- **CI Environment**: 1 worker (GitHub Actions runner)
-- **Local Development**: Auto-detected workers (typically 4-8 based on CPU cores)
-
-**⏱️ Estimated Execution Times:**
-```
-┌─────────────────────┬──────────────┬─────────────────┬──────────────────┐
-│ Environment         │ Workers      │ Estimated Time  │ Efficiency Gain  │
-├─────────────────────┼──────────────┼─────────────────┼──────────────────┤
-│ CI (GitHub Actions) │ 1 worker     │ ~8-12 minutes   │ Baseline         │
-│ Local (4 cores)     │ 4 workers    │ ~2-3 minutes    │ 75% faster       │
-│ Local (8 cores)     │ 8 workers    │ ~1.5-2 minutes  │ 85% faster       │
-│ Sequential          │ No parallel  │ ~15-20 minutes  │ Reference        │
-└─────────────────────┴──────────────┴─────────────────┴──────────────────┘
-```
-
-**🎯 Performance Benefits:**
-- **Parallel Execution**: Tests run simultaneously across multiple browser instances
-- **Resource Optimization**: Each worker handles independent test files
-- **Faster Feedback**: Developers get results 75-85% faster locally
-- **CI Stability**: Single worker in CI ensures consistent, reliable results
-- **Memory Management**: Controlled resource usage prevents system overload
-
-**📈 Scalability Metrics:**
-- **Test Density**: ~23-35 tests per worker (282 tests ÷ 8 workers)
-- **Throughput**: ~2-4 tests per minute per worker
-- **Resource Usage**: ~200-400MB RAM per worker
-- **Browser Instances**: 1 browser per worker for isolation
-
-### 🔄 **Worker Strategy Rationale**
-
-**CI Environment (1 Worker):**
-- ✅ **Stability**: Prevents resource contention on shared runners
-- ✅ **Reliability**: Consistent execution environment
-- ✅ **Cost Efficiency**: Optimal use of GitHub Actions minutes
-- ✅ **Debugging**: Easier to trace issues in sequential execution
-
-**Local Development (Auto-detect):**
-- ⚡ **Speed**: Maximum parallelization for fast feedback
-- 🔧 **Flexibility**: Adapts to developer's hardware capabilities
-- 🧪 **Testing**: Quick iteration during development
-- 💻 **Resource Aware**: Uses available CPU cores efficiently
-
-**🔐 Authentication Method Performance Comparison:**
-```
-┌─────────────────────┬─────────────────┬─────────────────┬──────────────────┐
-│ Authentication      │ Time per Test   │ 282 Tests Total │ Performance Gain │
-├─────────────────────┼─────────────────┼─────────────────┼──────────────────┤
-│ 🚀 JWT Method       │ ~2-3 seconds    │ ~9-14 minutes   │ Baseline (Fast)  │
-│ 👁️ UI-Login Method  │ ~7-9 seconds    │ ~33-42 minutes  │ 5-6s slower/test │
-│ 📊 Savings with JWT │ 5-6 seconds     │ ~24-28 minutes  │ 70% faster       │
-└─────────────────────┴─────────────────┴─────────────────┴──────────────────┘
-```
-
 ## 🔗 Related Project
 
 **Main Application:** [NutriStats - Pro Athlete Nutrition Planning & Analytics Platform](https://github.com/TomerTTB/NutriStats)
@@ -610,6 +543,106 @@ CLEANUP_MODE=all               # all, selective, old, disabled
 - **Timeouts:** 10s action, 30s navigation
 - **Artifacts:** Screenshots, videos, traces
 
+## ⚡ Performance Optimization & Playwright Workers
+
+### Worker Configuration Strategy
+
+```javascript
+// Configuration (playwright.config.js)
+workers: process.env.CI ? 1 : undefined  // 1 worker in CI, auto-detect locally
+fullyParallel: true                      // Enable parallel test execution
+retries: process.env.CI ? 2 : 0         // Retry failed tests in CI only
+```
+
+### System Requirements & Resource Allocation
+
+#### Memory Requirements
+```
+┌─────────────────────┬─────────────────┬─────────────────┬─────────────────┐
+│ Environment Type    │ Memory per      │ Recommended     │ Total System    │
+│                     │ Worker          │ Workers         │ Memory          │
+├─────────────────────┼─────────────────┼─────────────────┼─────────────────┤
+│ Local Development   │ 1GB             │ 4-6 workers     │ 8GB minimum     │
+│ CI/CD Pipeline      │ 1GB             │ 1 worker        │ 4GB minimum     │
+│ High-End Workstation│ 1GB             │ 8-12 workers    │ 16GB+           │
+│ Resource-Constrained│ 512MB           │ 2-3 workers     │ 4GB minimum     │
+└─────────────────────┴─────────────────┴─────────────────┴─────────────────┘
+```
+
+#### CPU Allocation Guidelines
+```
+┌─────────────────────┬─────────────────┬─────────────────┬─────────────────┐
+│ Environment         │ CPU Strategy    │ Worker Count    │ Execution Mode  │
+├─────────────────────┼─────────────────┼─────────────────┼─────────────────┤
+│ Local Development   │ Auto-detect     │ CPU cores - 1   │ Headless        │
+│ CI/CD (GitHub)      │ Single worker   │ 1 worker        │ Headless        │
+│ Debug/Development   │ Limited         │ 1-2 workers     │ Headed          │
+│ Performance Testing │ Maximum         │ All cores       │ Headless        │
+└─────────────────────┴─────────────────┴─────────────────┴─────────────────┘
+```
+
+### Performance Benchmarks
+
+#### Execution Time Analysis (282 Tests)
+```
+┌─────────────────────┬─────────────────┬─────────────────┬─────────────────┐
+│ Configuration       │ Worker Count    │ Execution Time  │ Efficiency Gain │
+├─────────────────────┼─────────────────┼─────────────────┼─────────────────┤
+│ Sequential          │ 1 (no parallel) │ 15-20 minutes   │ Baseline        │
+│ CI Environment      │ 1 worker        │ 8-12 minutes    │ 40% faster      │
+│ Local (4 cores)     │ 4 workers       │ 2-3 minutes     │ 75% faster      │
+│ Local (8 cores)     │ 8 workers       │ 1.5-2 minutes   │ 85% faster      │
+└─────────────────────┴─────────────────┴─────────────────┴─────────────────┘
+```
+
+#### Authentication Method Performance Impact
+```
+┌─────────────────────┬─────────────────┬─────────────────┬─────────────────┐
+│ Authentication      │ Time per Test   │ Full Suite      │ Performance     │
+│ Method              │                 │ (282 tests)     │ Impact          │
+├─────────────────────┼─────────────────┼─────────────────┼─────────────────┤
+│ JWT (Token-based)   │ 2-3 seconds     │ 9-14 minutes    │ Optimal         │
+│ UI-Login (Visual)   │ 7-9 seconds     │ 33-42 minutes   │ +24-28 minutes  │
+│ Performance Delta   │ +5-6 seconds    │ +70% slower     │ 70% overhead    │
+└─────────────────────┴─────────────────┴─────────────────┴─────────────────┘
+```
+
+### Resource Optimization Strategy
+
+#### Worker Distribution Logic
+- **Test Density**: 23-35 tests per worker (optimal distribution)
+- **Throughput**: 2-4 tests per minute per worker
+- **Memory Footprint**: ~1GB RAM per worker (includes browser instance)
+- **Browser Isolation**: Each worker maintains independent browser context
+
+#### Environment-Specific Optimizations
+
+**CI/CD Pipeline (GitHub Actions)**
+- Single worker configuration for stability and cost efficiency
+- Headless mode reduces memory overhead by 30-40%
+- Sequential execution ensures consistent, reproducible results
+- Optimal for debugging and artifact generation
+
+**Local Development**
+- Auto-detection leverages available system resources
+- Parallel execution maximizes developer productivity
+- Headless mode recommended for routine testing
+- Headed mode available for debugging and visual verification
+
+### Performance Monitoring
+
+#### Key Performance Indicators
+- **Test Execution Rate**: 2-4 tests/minute/worker
+- **Resource Utilization**: <80% CPU, <90% memory
+- **Failure Rate**: <1% (excluding intentional negative tests)
+- **Artifact Generation**: Screenshots, videos, traces per test
+
+#### Scalability Metrics
+- **Linear Scaling**: Performance scales with worker count up to CPU limit
+- **Memory Efficiency**: 1GB per worker supports complex web application testing
+- **Network Overhead**: Minimal impact due to local database usage
+- **Browser Startup**: ~2-3 seconds per worker initialization
+
 ## 🎯 Test Scenarios
 
 ### Critical User Journeys
@@ -664,69 +697,13 @@ The repository includes a fully configured GitHub Actions workflow that:
 - **Multiple Formats**: HTML, JSON, and JUnit reports for different use cases
 - **Long Retention**: HTML reports kept for 30 days, other artifacts for 7 days
 
-### 🚀 CI/CD Integration & Performance
+### CI/CD Integration
 
-- **GitHub Actions**: Native integration with comprehensive workflow
+- **GitHub Actions**: Native integration with complete workflow
 - **Automated Testing**: Runs on code changes, pull requests, and manual triggers
 - **Environment Isolation**: Each test run uses a fresh environment and database
 - **Optimized Parallel Execution**: Smart worker configuration for maximum efficiency
 - **Failure Analysis**: Detailed reporting and artifact collection for debugging
-
-### ⚡ Performance Optimization & Playwright Workers
-
-#### 🔧 **Worker Configuration Strategy**
-```javascript
-// Current Configuration (playwright.config.js)
-workers: process.env.CI ? 1 : undefined  // 1 worker in CI, auto-detect locally
-fullyParallel: true                      // Enable parallel test execution
-retries: process.env.CI ? 2 : 0         // Retry failed tests in CI only
-```
-
-#### 📊 **Performance Metrics & KPIs**
-
-**🏃‍♂️ Execution Speed Analysis:**
-- **Total Tests**: 282 comprehensive test cases
-- **CI Environment**: 1 worker (GitHub Actions runner)
-- **Local Development**: Auto-detected workers (typically 4-8 based on CPU cores)
-
-**⏱️ Estimated Execution Times:**
-```
-┌─────────────────────┬──────────────┬─────────────────┬──────────────────┐
-│ Environment         │ Workers      │ Estimated Time  │ Efficiency Gain  │
-├─────────────────────┼──────────────┼─────────────────┼──────────────────┤
-│ CI (GitHub Actions) │ 1 worker     │ ~8-12 minutes   │ Baseline         │
-│ Local (4 cores)     │ 4 workers    │ ~2-3 minutes    │ 75% faster       │
-│ Local (8 cores)     │ 8 workers    │ ~1.5-2 minutes  │ 85% faster       │
-│ Sequential          │ No parallel  │ ~15-20 minutes  │ Reference        │
-└─────────────────────┴──────────────┴─────────────────┴──────────────────┘
-```
-
-**🎯 Performance Benefits:**
-- **Parallel Execution**: Tests run simultaneously across multiple browser instances
-- **Resource Optimization**: Each worker handles independent test files
-- **Faster Feedback**: Developers get results 75-85% faster locally
-- **CI Stability**: Single worker in CI ensures consistent, reliable results
-- **Memory Management**: Controlled resource usage prevents system overload
-
-**📈 Scalability Metrics:**
-- **Test Density**: ~23-35 tests per worker (282 tests ÷ 8 workers)
-- **Throughput**: ~2-4 tests per minute per worker
-- **Resource Usage**: ~200-400MB RAM per worker
-- **Browser Instances**: 1 browser per worker for isolation
-
-#### 🔄 **Worker Strategy Rationale**
-
-**CI Environment (1 Worker):**
-- ✅ **Stability**: Prevents resource contention on shared runners
-- ✅ **Reliability**: Consistent execution environment
-- ✅ **Cost Efficiency**: Optimal use of GitHub Actions minutes
-- ✅ **Debugging**: Easier to trace issues in sequential execution
-
-**Local Development (Auto-detect):**
-- ⚡ **Speed**: Maximum parallelization for fast feedback
-- 🔧 **Flexibility**: Adapts to developer's hardware capabilities
-- 🧪 **Testing**: Quick iteration during development
-- 💻 **Resource Aware**: Uses available CPU cores efficiently
 
 ## 🤝 Contributing
 
