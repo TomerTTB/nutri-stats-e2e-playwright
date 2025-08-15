@@ -1,2 +1,0 @@
-# This file ensures the data directory exists in the repository
-# The actual database files are ignored by .gitignore for security

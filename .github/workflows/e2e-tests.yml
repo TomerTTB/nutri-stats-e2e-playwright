@@ -1,0 +1,134 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout e2e tests
+      uses: actions/checkout@v4
+      with:
+        path: e2e-tests
+
+    - name: Checkout main application
+      uses: actions/checkout@v4
+      with:
+        repository: TomerTTB/Stats
+        path: nutristats-app
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install main app dependencies
+      run: |
+        cd nutristats-app
+        npm ci
+
+    - name: Install e2e test dependencies
+      run: |
+        cd e2e-tests
+        npm ci
+
+    - name: Install Playwright browsers
+      run: |
+        cd e2e-tests
+        npx playwright install --with-deps
+
+    - name: Setup test database
+      run: |
+        cd nutristats-app
+        npm run migrate:init
+        
+    - name: Start NutriStats application
+      run: |
+        cd nutristats-app
+        # Start the app in background
+        NODE_ENV=test PORT=8080 npm start &
+        echo $! > ../app.pid
+        
+        # Wait for the application to be ready
+        echo "Waiting for application to start..."
+        timeout=60
+        while [ $timeout -gt 0 ]; do
+          if curl -f http://localhost:8080 >/dev/null 2>&1; then
+            echo "✅ Application is ready!"
+            break
+          fi
+          echo "⏳ Waiting for app... ($timeout seconds remaining)"
+          sleep 2
+          timeout=$((timeout-2))
+        done
+        
+        if [ $timeout -le 0 ]; then
+          echo "❌ Application failed to start within 60 seconds"
+          exit 1
+        fi
+
+    - name: Run E2E tests
+      run: |
+        cd e2e-tests
+        # Use ui-login strategy for testing and run only login test
+        AUTH_STRATEGY=ui-login npx playwright test tests/auth/login.spec.js
+      env:
+        CI: true
+
+    - name: Upload test artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report-${{ github.run_number }}
+        path: |
+          e2e-tests/test-artifacts/
+        retention-days: 7
+
+    - name: Comment PR with test results
+      uses: actions/github-script@v7
+      if: github.event_name == 'pull_request' && always()
+      with:
+        script: |
+          const fs = require('fs');
+          const path = 'e2e-tests/test-artifacts/reports/test-results.json';
+          
+          if (fs.existsSync(path)) {
+            const results = JSON.parse(fs.readFileSync(path, 'utf8'));
+            const { stats } = results;
+            
+            const body = `## 🧪 E2E Test Results
+            
+            - **Total Tests:** ${stats.total}
+            - **Passed:** ${stats.expected} ✅
+            - **Failed:** ${stats.unexpected} ❌
+            - **Skipped:** ${stats.skipped} ⏭️
+            
+            ${stats.unexpected > 0 ? '❌ Some tests failed. Check the artifacts for details.' : '✅ All tests passed!'}
+            
+            [View detailed report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+          }
+
+    - name: Cleanup
+      if: always()
+      run: |
+        # Stop the application
+        if [ -f app.pid ]; then
+          kill $(cat app.pid) 2>/dev/null || true
+          rm app.pid
+        fi
+        
+        # Kill any remaining node processes
+        pkill -f "node server.js" || true
