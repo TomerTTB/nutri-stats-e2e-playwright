@@ -31,12 +31,12 @@ jobs:
     - name: Install main app dependencies
       run: |
         cd nutristats-app
-        npm ci
+        npm ci || npm install
 
     - name: Install e2e test dependencies
       run: |
         cd e2e-tests
-        npm ci
+        npm ci || npm install
 
     - name: Install Playwright browsers
       run: |
