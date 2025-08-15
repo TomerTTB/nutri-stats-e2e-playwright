@@ -46,7 +46,11 @@ jobs:
     - name: Setup test database
       run: |
         cd nutristats-app
-        npm run migrate:init
+        # Create data directory if it doesn't exist
+        mkdir -p src/data
+        # Copy the test database from e2e-tests
+        cp ../e2e-tests/data/origin/nutrition_app.db src/data/nutrition_app.db
+        echo "✅ Test database copied successfully"
         
     - name: Start NutriStats application
       run: |
