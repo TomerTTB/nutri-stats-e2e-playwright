@@ -94,13 +94,13 @@ jobs:
           e2e-tests/test-artifacts/
         retention-days: 7
 
-    - name: Deploy HTML Report to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+    - name: Upload HTML Report
+      uses: actions/upload-artifact@v4
       if: always()
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: e2e-tests/test-artifacts/reports/html-report
-        destination_dir: reports/${{ github.run_number }}
+        name: html-report-${{ github.run_number }}
+        path: e2e-tests/test-artifacts/reports/html-report/
+        retention-days: 30
 
     - name: Create Test Summary
       if: always()
@@ -133,8 +133,10 @@ jobs:
         
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### 📊 Reports Available:" >> $GITHUB_STEP_SUMMARY
-        echo "- [📥 Download Artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
-        echo "- [🌐 HTML Report (GitHub Pages)](https://${{ github.repository_owner }}.github.io/nutri-stats-e2e-playwright/reports/${{ github.run_number }}/)" >> $GITHUB_STEP_SUMMARY
+        echo "- [📥 Download All Artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
+        echo "- [📊 HTML Report Only](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) - Look for 'html-report-${{ github.run_number }}'" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**💡 Tip:** Download the 'html-report-${{ github.run_number }}' artifact and open 'index.html' in your browser for the interactive report." >> $GITHUB_STEP_SUMMARY
 
     - name: Comment PR with test results
       uses: actions/github-script@v7
@@ -158,8 +160,10 @@ jobs:
             ${stats.unexpected > 0 ? '❌ Some tests failed. Check the artifacts for details.' : '✅ All tests passed!'}
             
             ### 📊 Reports:
-            - [📥 Download Artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-            - [🌐 HTML Report](https://${{ github.repository_owner }}.github.io/nutri-stats-e2e-playwright/reports/${{ github.run_number }}/)`;
+            - [📥 Download All Artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            - [📊 HTML Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) (Look for 'html-report-${{ github.run_number }}')
+            
+            **💡 Tip:** Download the HTML report artifact and open 'index.html' for the interactive report.`;
             
             github.rest.issues.createComment({
               issue_number: context.issue.number,
