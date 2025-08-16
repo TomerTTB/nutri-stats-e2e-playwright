@@ -25,7 +25,11 @@
     "test:clean": "cross-env CLEANUP_ARTIFACTS=true npm run test",
     "test:no-clean": "cross-env CLEANUP_ARTIFACTS=false npm run test",
     "test:clean-old": "cross-env CLEANUP_MODE=old npm run test",
-    "test:clean-selective": "cross-env CLEANUP_MODE=selective npm run test"
+    "test:clean-selective": "cross-env CLEANUP_MODE=selective npm run test",
+    "performance:analyze": "node monitoring/performance-analyzer.js",
+    "performance:monitor": "node monitoring/performance-monitor.js",
+    "performance:clean": "rm -rf test-artifacts/performance/*",
+    "performance:stats": "ls -la test-artifacts/performance/ && echo 'Run npm run performance:analyze for detailed analysis'"
   },
   "keywords": [
     "playwright",

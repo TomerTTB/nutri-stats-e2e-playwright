@@ -5,9 +5,21 @@
 const DatabaseManager = require('./utils/database-manager');
 const { cleanupArtifacts, createArtifactStructure, getArtifactStats } = require('./scripts/manage-artifacts');
 const { getCleanupConfig, printConfig } = require('./config/artifact-config');
+const PerformanceMonitor = require('./monitoring/performance-monitor');
+const os = require('os');
 
 async function globalSetup() {
   console.log('🚀 Starting global test setup...');
+  
+  // Log system information
+  console.log('💻 System Information:');
+  console.log(`   OS: ${os.type()} ${os.release()}`);
+  console.log(`   Architecture: ${os.arch()}`);
+  console.log(`   CPU Cores: ${os.cpus().length}`);
+  console.log(`   Total Memory: ${Math.round(os.totalmem() / 1024 / 1024 / 1024)}GB`);
+  console.log(`   Free Memory: ${Math.round(os.freemem() / 1024 / 1024 / 1024)}GB`);
+  console.log(`   Load Average: ${os.loadavg().map(l => l.toFixed(2)).join(', ')}`);
+  console.log('');
   
   const dbManager = new DatabaseManager();
   
@@ -20,6 +32,13 @@ async function globalSetup() {
     
     // Store backup path for global teardown
     process.env.TEST_BACKUP_PATH = backupPath;
+    
+    // Initialize global performance monitor
+    global.performanceMonitor = new PerformanceMonitor();
+    
+    // Start monitoring with 5-second intervals
+    await global.performanceMonitor.startMonitoring(5000);
+    console.log('🔍 Performance monitoring started');
     
     console.log('✅ Global test setup complete');
   } catch (error) {

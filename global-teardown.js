@@ -7,6 +7,12 @@ const DatabaseManager = require('./utils/database-manager');
 async function globalTeardown() {
   console.log('🧹 Starting global test teardown...');
   
+  // Stop performance monitoring
+  if (global.performanceMonitor) {
+    global.performanceMonitor.stopMonitoring();
+    console.log('🔍 Performance monitoring stopped');
+  }
+  
   const dbManager = new DatabaseManager();
   
   try {
@@ -16,6 +22,7 @@ async function globalTeardown() {
       await dbManager.cleanupTestDatabase(backupPath);
     }
     
+    console.log('🎯 Check test-artifacts/performance/ for detailed performance reports');
     console.log('✅ Global test teardown complete');
   } catch (error) {
     console.error('❌ Global test teardown failed:', error);

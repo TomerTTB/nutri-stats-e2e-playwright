@@ -1,0 +1,467 @@
+<testsuites id="" name="" tests="26" failures="0" skipped="0" errors="0" time="75.973461">
+<testsuite name="diary\food-search.spec.js" timestamp="2025-08-13T16:14:17.905Z" hostname="chromium" tests="26" failures="0" skipped="0" time="384.73" errors="0">
+<testcase name="Food Search Functionality › Food Search and Filtering › should display search results when typing in food search input" classname="diary\food-search.spec.js" time="17.534">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: e1icpctr@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\food-search-results-me-search-2025-08-13T16-14-37-550Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-566c6-typing-in-food-search-input-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-566c6-typing-in-food-search-input-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Search and Filtering › should filter search results based on search term" classname="diary\food-search.spec.js" time="19.977">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: e51xqty4@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Results may still be visible after timeout
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\food-search-filtering-multiple-terms-2025-08-13T16-14-39-892Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-3360c-esults-based-on-search-term-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-3360c-esults-based-on-search-term-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Search and Filtering › should show no results for non-existent food items" classname="diary\food-search.spec.js" time="18.287">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: zrx75us9@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\food-search-no-results-nonexistent-food-2025-08-13T16-14-38-032Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-2e12f-for-non-existent-food-items-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-2e12f-for-non-existent-food-items-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Search and Filtering › should clear search results when input is cleared" classname="diary\food-search.spec.js" time="21.003">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: rysso18a@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Results may still be visible after timeout
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\food-search-cleared-after-clear-2025-08-13T16-14-40-658Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-59c74-sults-when-input-is-cleared-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-59c74-sults-when-input-is-cleared-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Search and Filtering › should handle partial search terms correctly" classname="diary\food-search.spec.js" time="23.403">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: 8cz3iem3@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Results may still be visible after timeout
+Results may still be visible after timeout
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\food-search-partial-partial-terms-2025-08-13T16-14-43-101Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-8c8e9-tial-search-terms-correctly-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-8c8e9-tial-search-terms-correctly-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Search and Filtering › should handle case-insensitive search" classname="diary\food-search.spec.js" time="21.628">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: jpl66wl1@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\food-search-case-insensitive-case-variations-2025-08-13T16-14-41-230Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-16d5f-dle-case-insensitive-search-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-16d5f-dle-case-insensitive-search-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Selection and Quantity Input › should select food item by clicking on search result" classname="diary\food-search.spec.js" time="11.369">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: xkd8dvtp@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Results may still be visible after timeout
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\food-selection-click-me-selected-2025-08-13T16-14-49-129Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-bb522-y-clicking-on-search-result-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-bb522-y-clicking-on-search-result-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Selection and Quantity Input › should select food item by name" classname="diary\food-search.spec.js" time="11.447">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: 74yf8vjp@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Results may still be visible after timeout
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\food-selection-by-name-me-selected-2025-08-13T16-14-49-983Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-efee0-ld-select-food-item-by-name-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-efee0-ld-select-food-item-by-name-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Selection and Quantity Input › should set and update food quantity" classname="diary\food-search.spec.js" time="14.637">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: os0wqx56@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\food-quantity-update-different-quantities-2025-08-13T16-14-54-309Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-2ee52-et-and-update-food-quantity-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-2ee52-et-and-update-food-quantity-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Selection and Quantity Input › should handle decimal quantities correctly" classname="diary\food-search.spec.js" time="15.826">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: 4lbymyvj@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\food-decimal-quantities-decimal-amounts-2025-08-13T16-14-56-801Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-59dda-ecimal-quantities-correctly-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-59dda-ecimal-quantities-correctly-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Selection and Quantity Input › should update nutritional values when quantity changes" classname="diary\food-search.spec.js" time="11.826">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: oopvvpy0@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\nutrition-quantity-update-doubled-quantity-2025-08-13T16-14-53-515Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-b2378-alues-when-quantity-changes-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-b2378-alues-when-quantity-changes-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Search Result Accuracy › should display accurate food information in search results" classname="diary\food-search.spec.js" time="9.742">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: fs24pxlu@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\search-result-accuracy-me-results-2025-08-13T16-14-51-672Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-e1bea-formation-in-search-results-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-e1bea-formation-in-search-results-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Search Result Accuracy › should maintain search result order consistency" classname="diary\food-search.spec.js" time="18.264">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: jilp3h5p@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Results may still be visible after timeout
+Results may still be visible after timeout
+Results may still be visible after timeout
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\search-result-consistency-multiple-searches-2025-08-13T16-15-07-274Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-a1bb4-ch-result-order-consistency-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-a1bb4-ch-result-order-consistency-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Search Result Accuracy › should show relevant results for common food searches" classname="diary\food-search.spec.js" time="12.063">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: dt88zuxz@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Results may still be visible after timeout
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\common-food-searches-relevant-results-2025-08-13T16-15-01-927Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-b059c-ts-for-common-food-searches-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-b059c-ts-for-common-food-searches-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Search Result Accuracy › should handle special characters in search terms" classname="diary\food-search.spec.js" time="19.74">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: tndorgxh@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+No search results appeared for "Me!" in meal 1, row 0
+No search results appeared for "Me@" in meal 1, row 0
+No search results appeared for "Me#" in meal 1, row 0
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\special-character-search-special-terms-2025-08-13T16-15-12-787Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-2b327--characters-in-search-terms-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-2b327--characters-in-search-terms-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Search Modal Interactions › should support keyboard navigation through search results" classname="diary\food-search.spec.js" time="9.332">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: trxqnhjy@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\keyboard-navigation-search-results-2025-08-13T16-15-03-159Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-1345c-tion-through-search-results-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-1345c-tion-through-search-results-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Search Modal Interactions › should close search results with Escape key" classname="diary\food-search.spec.js" time="11.225">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: 8n9hgrt4@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Results may still be visible after timeout
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\escape-key-close-results-closed-2025-08-13T16-15-05-901Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-49500-rch-results-with-Escape-key-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-49500-rch-results-with-Escape-key-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Search Modal Interactions › should select food with Enter key" classname="diary\food-search.spec.js" time="10.287">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: 6h5tug8j@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Results may still be visible after timeout
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\enter-key-selection-me-selected-2025-08-13T16-15-07-098Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-04332--select-food-with-Enter-key-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-04332--select-food-with-Enter-key-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Search Modal Interactions › should handle multiple food searches in different meal rows" classname="diary\food-search.spec.js" time="19.087">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: 0db0dtxz@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\multiple-food-searches-different-rows-2025-08-13T16-15-20-599Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-741ea-ches-in-different-meal-rows-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-741ea-ches-in-different-meal-rows-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Search Modal Interactions › should handle food search across different meals" classname="diary\food-search.spec.js" time="17.993">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: e7fugfen@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\cross-meal-searches-different-meals-2025-08-13T16-15-20-749Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-b15f8-arch-across-different-meals-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-b15f8-arch-across-different-meals-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Search Modal Interactions › should maintain search state when switching between inputs" classname="diary\food-search.spec.js" time="11.436">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: xueotc38@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\search-state-switching-between-inputs-2025-08-13T16-15-17-093Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-6e213-en-switching-between-inputs-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-6e213-en-switching-between-inputs-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Search Modal Interactions › should handle rapid search input changes" classname="diary\food-search.spec.js" time="12.144">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: 64urovpv@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\rapid-search-changes-final-results-2025-08-13T16-15-19-300Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-93ee6--rapid-search-input-changes-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-93ee6--rapid-search-input-changes-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Food Search Modal Interactions › should complete full food selection workflow" classname="diary\food-search.spec.js" time="13.558">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: jaqntlg2@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Results may still be visible after timeout
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\complete-workflow-me-added-2025-08-13T16-15-21-000Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-76863-ull-food-selection-workflow-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-76863-ull-food-selection-workflow-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Error Handling and Edge Cases › should handle empty search gracefully" classname="diary\food-search.spec.js" time="8.181">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: 13tcu291@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\empty-search-no-results-2025-08-13T16-15-21-192Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-c166f-dle-empty-search-gracefully-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-c166f-dle-empty-search-gracefully-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Error Handling and Edge Cases › should handle very long search terms" classname="diary\food-search.spec.js" time="11.253">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: 8suew2kv@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+No search results appeared for "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" in meal 1, row 0
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\long-search-term-handled-gracefully-2025-08-13T16-15-28-629Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-2a699-ndle-very-long-search-terms-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-2a699-ndle-very-long-search-terms-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Food Search Functionality › Error Handling and Edge Cases › should handle invalid quantity values" classname="diary\food-search.spec.js" time="13.488">
+<system-out>
+<![CDATA[🔐 Starting UI login process...
+📧 Email: erc3063n@test.com
+🔑 Password: [HIDDEN]
+✍️ Filled login form, clicking login button...
+🌐 After login, current URL: http://localhost:8080/diary.html
+✅ UI login successful! Token obtained.
+✅ UI login verification successful!
+System rejected quantity "-1": [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+
+Expected: >= [32m0[39m
+Received:    [31m-1[39m
+Screenshot saved: C:\Projects\Stats\e2e-tests\test-artifacts\screenshots\invalid-quantities-handled-appropriately-2025-08-13T16-15-32-896Z.png
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-a1c30-dle-invalid-quantity-values-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|..\videos\diary-food-search-Food-Sea-a1c30-dle-invalid-quantity-values-chromium\video.webm]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>

@@ -53,7 +53,8 @@ module.exports = defineConfig({
   reporter: [
     ['html', { outputFolder: 'test-artifacts/reports/html-report' }],
     ['json', { outputFile: 'test-artifacts/reports/test-results.json' }],
-    ['junit', { outputFile: 'test-artifacts/reports/junit.xml' }]
+    ['junit', { outputFile: 'test-artifacts/reports/junit.xml' }],
+    ['./monitoring/performance-reporter.js']
   ],
   /* Output directory for test artifacts - videos, traces, etc. */
   outputDir: 'test-artifacts/videos',
