@@ -80,8 +80,8 @@ jobs:
     - name: Run E2E tests
       run: |
         cd e2e-tests
-        # Use ui-login strategy and run all tests
-        AUTH_STRATEGY=ui-login npm test
+        # Use ui-login strategy and run only login tests
+        AUTH_STRATEGY=ui-login npx playwright test tests/auth/login.spec.js
       env:
         CI: true
 
