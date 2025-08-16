@@ -1,0 +1,4 @@
+# All secret files should be ignored
+*
+!.gitignore
+!README.md
