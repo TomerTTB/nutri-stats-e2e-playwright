@@ -7,7 +7,7 @@ class DataDogReporter {
     this.testMetrics = [];
     this.suiteStartTime = null;
     this.ddClient = null;
-    
+
     if (this.config.enabled) {
       this.initializeDataDog();
     }
@@ -38,7 +38,7 @@ class DataDogReporter {
       const tracer = require('dd-trace');
       const StatsD = require('hot-shots');
 
-      // Initialize tracer
+      // Initialize tracer with CI Visibility support
       tracer.init({
         service: this.config.service,
         env: this.config.env,
@@ -47,22 +47,47 @@ class DataDogReporter {
           const [key, value] = tag.split(':');
           if (key && value) acc[key] = value;
           return acc;
-        }, {})
+        }, {}),
+        // CI Visibility configuration
+        ...(process.env.CI && {
+          logInjection: true,
+          runtimeMetrics: true,
+          // Use agent URL if available (for GitHub Actions service container)
+          url: process.env.DD_TRACE_AGENT_URL || 'http://localhost:8126'
+        })
       });
 
       // Initialize StatsD client for custom metrics
-      this.ddClient = new StatsD({
-        host: 'localhost',
-        port: 8125,
+      const statsdConfig = {
         globalTags: [
           `service:${this.config.service}`,
           `env:${this.config.env}`,
           `version:${this.config.version}`,
           ...this.config.tags
         ]
-      });
+      };
+
+      // Configure StatsD for different environments
+      if (process.env.DD_DOGSTATSD_URL) {
+        // Parse DD_DOGSTATSD_URL (e.g., "udp://localhost:8125")
+        const url = new URL(process.env.DD_DOGSTATSD_URL);
+        statsdConfig.host = url.hostname;
+        statsdConfig.port = parseInt(url.port);
+        statsdConfig.protocol = url.protocol.replace(':', '');
+      } else {
+        // Default configuration
+        statsdConfig.host = 'localhost';
+        statsdConfig.port = 8125;
+      }
+
+      this.ddClient = new StatsD(statsdConfig);
 
       console.log('🐕 DataDog monitoring initialized successfully');
+      console.log(`📊 StatsD: ${statsdConfig.protocol || 'udp'}://${statsdConfig.host}:${statsdConfig.port}`);
+
+      if (process.env.DD_TRACE_AGENT_URL) {
+        console.log(`🔍 APM Traces: ${process.env.DD_TRACE_AGENT_URL}`);
+      }
     } catch (error) {
       console.warn('⚠️ Failed to initialize DataDog:', error.message);
       console.warn('💡 Install DataDog packages: npm install dd-trace hot-shots');
@@ -73,10 +98,10 @@ class DataDogReporter {
   onBegin(config, suite) {
     this.suiteStartTime = Date.now();
     this.totalTests = suite.allTests().length;
-    
+
     if (this.config.enabled) {
       console.log('🐕 DataDog test suite monitoring started');
-      
+
       // Send suite start metric
       this.ddClient?.increment('playwright.suite.started', 1, {
         total_tests: this.totalTests.toString(),
@@ -94,7 +119,7 @@ class DataDogReporter {
     const endTime = Date.now();
     const duration = result.duration;
     const endMemory = process.memoryUsage();
-    
+
     const testMetric = {
       title: test.title,
       file: test.location.file,
@@ -118,13 +143,13 @@ class DataDogReporter {
 
       // Test duration metric
       this.ddClient.histogram('playwright.test.duration', duration, tags);
-      
+
       // Memory usage metric
       this.ddClient.histogram('playwright.test.memory_delta', testMetric.memory.delta, tags);
-      
+
       // Test result counter
       this.ddClient.increment(`playwright.test.${result.status}`, 1, tags);
-      
+
       // Retry counter
       if (result.retry > 0) {
         this.ddClient.increment('playwright.test.retries', result.retry, tags);
@@ -151,7 +176,7 @@ class DataDogReporter {
       this.ddClient.gauge('playwright.suite.passed_tests', passedTests);
       this.ddClient.gauge('playwright.suite.failed_tests', failedTests);
       this.ddClient.gauge('playwright.suite.skipped_tests', skippedTests);
-      
+
       // Pass rate metric
       const passRate = (passedTests / this.totalTests) * 100;
       this.ddClient.gauge('playwright.suite.pass_rate', passRate);
@@ -171,12 +196,12 @@ class DataDogReporter {
       const memoryDeltas = this.testMetrics.map(t => t.memory.delta);
       const avgMemoryDelta = memoryDeltas.reduce((a, b) => a + b, 0) / memoryDeltas.length;
       const maxMemoryDelta = Math.max(...memoryDeltas);
-      
+
       this.ddClient.histogram('playwright.suite.avg_memory_delta', avgMemoryDelta);
       this.ddClient.histogram('playwright.suite.max_memory_delta', maxMemoryDelta);
 
       console.log('🐕 DataDog metrics sent successfully');
-      
+
       // Close DataDog client
       this.ddClient.close();
     }

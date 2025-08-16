@@ -79,6 +79,19 @@ const config = {
         version: process.env.DD_VERSION || '1.0.0',
         tags: process.env.DD_TAGS ? process.env.DD_TAGS.split(',') : [],
 
+        // Agent configuration (for GitHub Actions service container)
+        agent: {
+            traceUrl: process.env.DD_TRACE_AGENT_URL || 'http://localhost:8126',
+            statsdUrl: process.env.DD_DOGSTATSD_URL || 'udp://localhost:8125',
+            enabled: !!(process.env.DD_TRACE_AGENT_URL || process.env.CI)
+        },
+
+        // CI Visibility configuration
+        ciVisibility: {
+            enabled: process.env.DD_CIVISIBILITY_ENABLED === 'true' || process.env.CI === 'true',
+            agentless: process.env.DD_CIVISIBILITY_AGENTLESS_ENABLED === 'true'
+        },
+
         // Custom metrics configuration
         metrics: {
             namespace: 'playwright',

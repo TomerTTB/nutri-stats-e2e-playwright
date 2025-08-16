@@ -65,6 +65,7 @@ npm run performance:stats
 
 ### DataDog Setup (Optional)
 
+#### Local Development
 ```bash
 # Install DataDog dependencies
 npm run datadog:install
@@ -79,6 +80,23 @@ npm run datadog:test
 # Run tests with DataDog monitoring
 npm run test:datadog
 ```
+
+#### GitHub Actions (Recommended)
+The GitHub Actions workflow automatically uses a DataDog Agent service container when `DD_API_KEY` secret is configured:
+
+1. **Add GitHub Secret**: Go to repository Settings → Secrets → Add `DD_API_KEY`
+2. **Automatic Setup**: The workflow automatically:
+   - Starts DataDog Agent as a service container
+   - Enables CI Visibility and APM tracing
+   - Configures proper agent URLs and tags
+   - Waits for agent health check before running tests
+
+#### Features with DataDog Agent:
+- **CI Visibility**: Test execution traces in DataDog
+- **APM Tracing**: Detailed performance traces
+- **Real-time Metrics**: Live dashboards during test runs
+- **Git Integration**: Commit info, branch, and author tracking
+- **Pipeline Correlation**: Link test results to CI/CD pipelines
 
 ### Manual Performance Analysis
 
