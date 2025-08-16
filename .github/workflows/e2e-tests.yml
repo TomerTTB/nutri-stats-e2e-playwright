@@ -11,6 +11,31 @@ jobs:
   e2e-tests:
     runs-on: ubuntu-latest
     
+    services:
+      # DataDog Agent as a service container (only if DD_API_KEY is configured)
+      datadog:
+        image: gcr.io/datadoghq/agent:7
+        env:
+          DD_API_KEY: ${{ secrets.DD_API_KEY }}
+          DD_SITE: ${{ vars.DD_SITE || 'datadoghq.com' }}
+          DD_HOSTNAME: github-actions-runner
+          DD_TAGS: "env:ci,service:e2e-tests,repository:${{ github.repository }}"
+          DD_DOGSTATSD_NON_LOCAL_TRAFFIC: true
+          DD_LOG_LEVEL: WARN
+          # Enable APM and CI Visibility
+          DD_APM_ENABLED: true
+          DD_APM_NON_LOCAL_TRAFFIC: true
+          DD_TRACE_ANALYTICS_ENABLED: true
+          # CI Visibility
+          DD_CI_VISIBILITY_ENABLED: true
+          DD_CIVISIBILITY_ENABLED: true
+        ports:
+          - 8125:8125/udp  # DogStatsD
+          - 8126:8126      # APM traces
+        options: --health-cmd="curl -f http://localhost:5555/health || exit 1" --health-interval=30s --health-timeout=5s --health-retries=3
+        # Only start DataDog service if API key is available
+        if: ${{ secrets.DD_API_KEY != '' }}
+    
     steps:
     - name: Checkout e2e tests
       uses: actions/checkout@v4
@@ -42,6 +67,13 @@ jobs:
       run: |
         cd e2e-tests
         npx playwright install --with-deps
+
+    - name: Wait for DataDog Agent
+      if: ${{ secrets.DD_API_KEY != '' }}
+      run: |
+        echo "Waiting for DataDog Agent to be ready..."
+        timeout 60s bash -c 'until curl -f http://localhost:5555/health; do sleep 2; done' || exit 1
+        echo "✅ DataDog Agent is ready!"
 
     - name: Setup test database
       run: |
@@ -84,14 +116,35 @@ jobs:
         AUTH_STRATEGY=ui-login npx playwright test tests/auth/login.spec.js
       env:
         CI: true
-        # DataDog configuration (optional - only if secrets are configured)
+        # DataDog configuration (enhanced for CI Visibility)
         DD_API_KEY_SECRET: ${{ secrets.DD_API_KEY }}
         DATADOG_ENABLED: ${{ secrets.DD_API_KEY && 'true' || 'false' }}
         MONITORING_BACKEND: ${{ secrets.DD_API_KEY && 'both' || 'local' }}
         DD_SERVICE: e2e-tests
-        DD_ENV: ci
+        DD_ENV: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
         DD_VERSION: ${{ github.sha }}
-        DD_TAGS: "repository:${{ github.repository }},branch:${{ github.ref_name }},run_id:${{ github.run_id }}"
+        DD_TAGS: "team:qa,project:${{ github.event.repository.name }},branch:${{ github.ref_name }}"
+        
+        # CI Visibility configuration
+        DD_CIVISIBILITY_AGENTLESS_ENABLED: false
+        DD_TRACE_AGENT_URL: http://localhost:8126
+        DD_DOGSTATSD_URL: udp://localhost:8125
+        
+        # Git information for DataDog CI Visibility
+        DD_GIT_REPOSITORY_URL: ${{ github.repositoryUrl }}
+        DD_GIT_COMMIT_SHA: ${{ github.sha }}
+        DD_GIT_BRANCH: ${{ github.ref_name }}
+        DD_GIT_COMMIT_MESSAGE: "${{ github.event.head_commit.message }}"
+        DD_GIT_COMMIT_AUTHOR_NAME: "${{ github.event.head_commit.author.name }}"
+        DD_GIT_COMMIT_AUTHOR_EMAIL: "${{ github.event.head_commit.author.email }}"
+        
+        # CI provider information
+        DD_CI_PROVIDER_NAME: github
+        DD_CI_PIPELINE_ID: ${{ github.run_id }}
+        DD_CI_PIPELINE_NAME: ${{ github.workflow }}
+        DD_CI_PIPELINE_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        DD_CI_JOB_NAME: ${{ github.job }}
+        DD_CI_JOB_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
     - name: Upload test artifacts
       uses: actions/upload-artifact@v4

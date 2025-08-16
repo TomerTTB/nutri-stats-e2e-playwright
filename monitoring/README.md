@@ -284,6 +284,121 @@ DD_MEMORY_THRESHOLD=100
 - `.env.both` - Dual monitoring configuration template
 - `.env.test` - Your active configuration (copy from templates)
 
+## 📊 Metrics Reference
+
+### Local Monitoring Metrics
+
+#### System Performance Metrics
+| Metric | Description | Unit | Good Range | Warning Level |
+|--------|-------------|------|------------|---------------|
+| `memory.system.usage` | System memory utilization | % | < 70% | > 80% |
+| `memory.system.total` | Total system memory | MB | - | - |
+| `memory.system.free` | Available system memory | MB | > 2GB | < 1GB |
+| `memory.process.rss` | Process memory (RSS) | MB | < 1GB | > 2GB |
+| `memory.process.heapUsed` | V8 heap memory used | MB | < 512MB | > 1GB |
+| `cpu.loadAvg[0]` | 1-minute load average | - | < 2.0 | > 3.0 |
+| `cpu.cpuCount` | Number of CPU cores | - | - | - |
+
+#### Test Performance Metrics
+| Metric | Description | Unit | Good Range | Warning Level |
+|--------|-------------|------|------------|---------------|
+| `test.duration` | Individual test execution time | ms | < 5000ms | > 10000ms |
+| `test.memory.delta` | Memory change during test | MB | < 50MB | > 100MB |
+| `suite.duration` | Total test suite time | ms | - | - |
+| `suite.passRate` | Percentage of passing tests | % | > 95% | < 90% |
+| `suite.avgTestDuration` | Average test execution time | ms | < 3000ms | > 5000ms |
+
+### DataDog Metrics
+
+#### Custom Metrics (StatsD)
+| Metric Name | Type | Description | Tags |
+|-------------|------|-------------|------|
+| `playwright.test.duration` | histogram | Individual test execution time (ms) | `test_file`, `test_status`, `test_title` |
+| `playwright.test.memory_delta` | histogram | Memory change during test (MB) | `test_file`, `test_status`, `test_title` |
+| `playwright.test.passed` | counter | Number of passed tests | `test_file`, `test_title` |
+| `playwright.test.failed` | counter | Number of failed tests | `test_file`, `test_title` |
+| `playwright.test.skipped` | counter | Number of skipped tests | `test_file`, `test_title` |
+| `playwright.test.retries` | counter | Number of test retries | `test_file`, `test_title` |
+| `playwright.test.slow` | counter | Number of slow tests (>10s) | `test_file`, `test_title` |
+| `playwright.suite.duration` | histogram | Total suite execution time (ms) | - |
+| `playwright.suite.total_tests` | gauge | Total number of tests | - |
+| `playwright.suite.passed_tests` | gauge | Number of passed tests | - |
+| `playwright.suite.failed_tests` | gauge | Number of failed tests | - |
+| `playwright.suite.pass_rate` | gauge | Test pass rate percentage | - |
+| `playwright.suite.avg_test_duration` | histogram | Average test duration (ms) | - |
+| `playwright.suite.slowest_test` | histogram | Slowest test duration (ms) | - |
+| `playwright.suite.fastest_test` | histogram | Fastest test duration (ms) | - |
+| `playwright.suite.avg_memory_delta` | histogram | Average memory change (MB) | - |
+| `playwright.suite.max_memory_delta` | histogram | Maximum memory change (MB) | - |
+
+#### APM Traces (CI Visibility)
+| Trace Type | Description | Span Tags |
+|------------|-------------|-----------|
+| `playwright.test` | Individual test execution | `test.name`, `test.status`, `test.file`, `test.duration` |
+| `playwright.suite` | Test suite execution | `test.suite`, `test.framework`, `test.type` |
+| `ci.pipeline` | CI pipeline execution | `ci.provider.name`, `ci.pipeline.id`, `ci.pipeline.url` |
+| `ci.job` | CI job execution | `ci.job.name`, `ci.job.url`, `git.branch`, `git.commit.sha` |
+
+#### Standard Tags (Applied to All Metrics)
+| Tag | Description | Example Values |
+|-----|-------------|----------------|
+| `service` | Service name | `e2e-tests` |
+| `env` | Environment | `production`, `staging`, `test` |
+| `version` | Version/commit SHA | `abc123def456` |
+| `team` | Team identifier | `qa`, `frontend` |
+| `project` | Project name | `nutristats` |
+| `branch` | Git branch | `main`, `feature/login` |
+| `repository` | Repository name | `nutri-stats-e2e-playwright` |
+| `ci.provider.name` | CI provider | `github` |
+| `test_file` | Test file name | `login.spec.js` |
+| `test_status` | Test result | `passed`, `failed`, `skipped` |
+
+### Metric Thresholds & Alerts
+
+#### Performance Thresholds
+```javascript
+// Configurable via environment variables
+DD_SLOW_TEST_THRESHOLD=10000      // 10 seconds
+DD_MEMORY_THRESHOLD=100           // 100MB
+MONITORING_INTERVAL=5000          // 5 seconds
+```
+
+#### Recommended DataDog Alerts
+1. **High Test Failure Rate**: `playwright.suite.pass_rate < 90`
+2. **Slow Test Suite**: `playwright.suite.duration > 300000` (5 minutes)
+3. **Memory Leaks**: `playwright.suite.max_memory_delta > 500` (500MB)
+4. **Frequent Retries**: `playwright.test.retries > 5`
+5. **CI Pipeline Failures**: `ci.pipeline.status:failed`
+
+### Metric Collection Examples
+
+#### Local Monitoring
+```bash
+# View latest performance summary
+npm run performance:analyze
+
+# Check performance artifacts
+ls -la test-artifacts/performance/
+
+# View specific report
+cat test-artifacts/performance/performance-summary-*.txt
+```
+
+#### DataDog Queries
+```sql
+-- Average test duration by file
+avg:playwright.test.duration{*} by {test_file}
+
+-- Test failure rate over time
+(sum:playwright.test.failed{*} / sum:playwright.test.total{*}) * 100
+
+-- Memory usage trends
+max:playwright.suite.max_memory_delta{*}
+
+-- CI pipeline success rate
+(sum:ci.pipeline.status:passed{*} / sum:ci.pipeline.total{*}) * 100
+```
+
 ## 📚 Best Practices
 
 ### 1. Regular Analysis
@@ -305,6 +420,12 @@ DD_MEMORY_THRESHOLD=100
 - Use performance reports to make informed decisions about infrastructure
 - Set up performance budgets and fail builds on regression
 - Archive performance data for historical analysis
+
+### 5. DataDog Dashboard Setup
+- Create dashboards for test execution trends
+- Set up alerts for performance regressions
+- Monitor CI/CD pipeline health
+- Track test coverage and success rates
 
 ## 🛠️ Troubleshooting
 

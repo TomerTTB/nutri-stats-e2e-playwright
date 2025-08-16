@@ -25,6 +25,7 @@ This E2E testing suite validates the complete functionality of the NutriStats we
 - [Technology Stack](#️-technology-stack)
 - [Project Structure](#-project-structure)
 - [Authentication Methods](#-authentication-methods)
+- [Performance Monitoring](#-performance-monitoring)
 - [Quick Start](#-quick-start)
 - [Running Tests](#-running-tests)
 - [Current Test Coverage](#-current-test-coverage)
@@ -38,7 +39,7 @@ This E2E testing suite validates the complete functionality of the NutriStats we
 
 **Main Application:** [NutriStats - Pro Athlete Nutrition Planning & Analytics Platform](https://github.com/TomerTTB/NutriStats)
 
-The NutriStats application is a comprehensive web-based nutrition tracking and analytics platform specifically designed for professional athletes and sports nutrition professionals, featuring advanced meal planning, macro tracking, weight management, and performance analytics.
+The NutriStats application is a web-based nutrition tracking and analytics platform specifically designed for professional athletes and sports nutrition professionals, featuring advanced meal planning, macro tracking, weight management, and performance analytics.
 
 ## ✨ Framework Features
 
@@ -117,7 +118,7 @@ e2e-tests/
 │   └── settings/                 # User settings pages
 ├── scripts/                      # Utility scripts
 │   ├── cleanup-test-data.js      # Data cleanup automation
-│   ├── manage-artifacts.js       # Comprehensive artifact management
+│   ├── manage-artifacts.js       # Artifact management
 │   └── verify-setup.js           # Setup verification
 ├── test-artifacts/               # 📊 Organized test outputs
 │   ├── reports/                  # HTML, JSON, and JUnit reports
@@ -191,7 +192,115 @@ UI-Login:       ~7-12 minutes
 Time Saved:     ~5-8 minutes (60-70% faster)
 ```
 
-**📚 Detailed Guide**: See [AUTHENTICATION_METHODS_GUIDE.md](./AUTHENTICATION_METHODS_GUIDE.md) for comprehensive documentation.
+**📚 Detailed Guide**: See [AUTHENTICATION_METHODS_GUIDE.md](./AUTHENTICATION_METHODS_GUIDE.md) for documentation.
+
+## 📊 Performance Monitoring
+
+The framework includes performance monitoring capabilities that track system resources, test execution metrics, and provide detailed analytics for optimization.
+
+### 🎯 **Monitoring Features**
+
+#### **Automatic Performance Tracking**
+- **System Resources**: CPU usage, memory consumption, load averages
+- **Test Metrics**: Individual test duration, memory delta, failure analysis
+- **Suite Analytics**: Overall execution time, pass rates, performance trends
+- **Real-time Monitoring**: 5-second interval sampling during test execution
+
+#### **Dual Monitoring Backends**
+```bash
+# Local monitoring only (default)
+npm test
+
+# DataDog monitoring (cloud-based dashboards)
+npm run test:datadog
+
+# Both local and DataDog monitoring
+npm run test:both
+```
+
+#### **Key Metrics Tracked**
+- **Test Performance**: Duration, memory usage, retry counts
+- **System Health**: CPU load, memory utilization, process metrics
+- **Quality Metrics**: Pass rates, failure patterns, slow test identification
+- **CI/CD Integration**: Pipeline correlation, git information, deployment tracking
+
+### 🐕 **DataDog Integration**
+
+#### **Enterprise Monitoring**
+- **CI Visibility**: Full test execution traces in DataDog UI
+- **APM Tracing**: Detailed performance traces with timing breakdown
+- **Real-time Dashboards**: Live metrics during test execution
+- **Custom Alerts**: Performance regression notifications
+- **Git Integration**: Automatic commit and branch correlation
+
+#### **GitHub Actions Integration**
+The framework automatically enables DataDog monitoring in CI/CD when `DD_API_KEY` secret is configured:
+- **Service Container**: DataDog Agent runs as a service container
+- **Health Checks**: Waits for agent readiness before test execution
+- **Automatic Tagging**: Repository, branch, and pipeline information
+- **Secure**: API key managed through GitHub Secrets
+
+### 📈 **Performance Analytics**
+
+#### **Local Reports**
+```bash
+# Analyze latest performance data
+npm run performance:analyze
+
+# View performance artifacts
+npm run performance:stats
+
+# Clean old performance data
+npm run performance:clean
+```
+
+#### **Report Outputs**
+- **JSON Reports**: Machine-readable performance data
+- **Text Summaries**: Human-readable performance insights
+- **Trend Analysis**: Performance comparison across test runs
+- **Issue Detection**: Automatic identification of performance problems
+
+### 🚨 **Performance Thresholds**
+
+| Metric | Good Range | Warning Level | Critical Level |
+|--------|------------|---------------|----------------|
+| **Test Duration**   | < 5s  | > 10s | > 30s |
+| **Memory Usage**    | < 70% | > 80% | > 90% |
+| **CPU Load**        | < 2.0 | > 3.0 | > 5.0 |
+| **Pass Rate**       | > 95% | < 90% | < 80% |
+
+### 🔧 **Configuration**
+
+#### **Environment Variables**
+```bash
+# Monitoring backend selection
+MONITORING_BACKEND=local          # local, datadog, both
+
+# Local monitoring settings
+LOCAL_MONITORING=true
+MONITORING_INTERVAL=5000          # 5 seconds
+
+# DataDog configuration (secure methods)
+DATADOG_ENABLED=true
+DD_SERVICE=e2e-tests
+DD_ENV=test
+```
+
+#### **Secure API Key Management**
+- **GitHub Secrets**: `DD_API_KEY` in repository secrets (recommended)
+- **Local Secret Files**: `.secrets/datadog-api-key` (git-ignored)
+- **Environment Variables**: `DD_API_KEY` or `DD_API_KEY_B64`
+- **System Storage**: `~/.datadog/api-key` or `/etc/datadog/api-key`
+
+### 📚 **Documentation**
+
+For monitoring setup, configuration, and usage:
+- **[Performance Monitoring Guide](./monitoring/README.md)** - Complete documentation
+- **Metrics Reference** - All available metrics and thresholds
+- **DataDog Setup** - Step-by-step configuration guide
+- **Troubleshooting** - Common issues and solutions
+
+**Performance monitoring helps ensure your E2E tests run efficiently and provides insights for continuous optimization!** 🚀
 
 ## 🚀 Quick Start
 
@@ -506,7 +615,7 @@ npm run test:report  # Opens local HTML report
 - **Page Object Classes:** 15+ (full POM implementation)
 - **Utility Functions:** 8 essential helpers
 - **Authentication Methods:** 3 (JWT, UI-Login, API-Login)
-- **Test Fixtures:** 6 comprehensive fixtures
+- **Test Fixtures:** 6 fixtures
 - **Configuration Files:** 4 (auth, artifacts, environment)
 
 #### 🎯 **Quality Metrics**

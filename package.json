@@ -48,9 +48,7 @@
     "@playwright/test": "^1.40.0",
     "cross-env": "^10.0.0",
     "dotenv": "^17.2.1",
-    "sqlite3": "^5.1.6"
-  },
-  "optionalDependencies": {
+    "sqlite3": "^5.1.6",
     "dd-trace": "^5.0.0",
     "hot-shots": "^10.0.0"
   }
