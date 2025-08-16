@@ -14,6 +14,11 @@ videos/
 # Test artifacts (new organized structure)
 test-artifacts/
 
+# Secret files (never commit)
+.secrets/*
+!.secrets/.gitignore
+!.secrets/README.md
+
 # Database files (keep original, ignore test changes)
 data/nutrition_app.db
 data/test-nutrition_app.db

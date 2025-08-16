@@ -84,6 +84,14 @@ jobs:
         AUTH_STRATEGY=ui-login npx playwright test tests/auth/login.spec.js
       env:
         CI: true
+        # DataDog configuration (optional - only if secrets are configured)
+        DD_API_KEY_SECRET: ${{ secrets.DD_API_KEY }}
+        DATADOG_ENABLED: ${{ secrets.DD_API_KEY && 'true' || 'false' }}
+        MONITORING_BACKEND: ${{ secrets.DD_API_KEY && 'both' || 'local' }}
+        DD_SERVICE: e2e-tests
+        DD_ENV: ci
+        DD_VERSION: ${{ github.sha }}
+        DD_TAGS: "repository:${{ github.repository }},branch:${{ github.ref_name }},run_id:${{ github.run_id }}"
 
     - name: Upload test artifacts
       uses: actions/upload-artifact@v4

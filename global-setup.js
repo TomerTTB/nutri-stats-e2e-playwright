@@ -6,6 +6,7 @@ const DatabaseManager = require('./utils/database-manager');
 const { cleanupArtifacts, createArtifactStructure, getArtifactStats } = require('./scripts/manage-artifacts');
 const { getCleanupConfig, printConfig } = require('./config/artifact-config');
 const PerformanceMonitor = require('./monitoring/performance-monitor');
+const { config: monitoringConfig, printConfig: printMonitoringConfig } = require('./monitoring/monitoring-config');
 const os = require('os');
 
 async function globalSetup() {
@@ -21,6 +22,9 @@ async function globalSetup() {
   console.log(`   Load Average: ${os.loadavg().map(l => l.toFixed(2)).join(', ')}`);
   console.log('');
   
+  // Print monitoring configuration
+  printMonitoringConfig();
+  
   const dbManager = new DatabaseManager();
   
   try {
@@ -33,12 +37,14 @@ async function globalSetup() {
     // Store backup path for global teardown
     process.env.TEST_BACKUP_PATH = backupPath;
     
-    // Initialize global performance monitor
-    global.performanceMonitor = new PerformanceMonitor();
-    
-    // Start monitoring with 5-second intervals
-    await global.performanceMonitor.startMonitoring(5000);
-    console.log('🔍 Performance monitoring started');
+    // Initialize global performance monitor (only if local monitoring is enabled)
+    if (monitoringConfig.local.enabled) {
+      global.performanceMonitor = new PerformanceMonitor();
+      
+      // Start monitoring with configured interval
+      await global.performanceMonitor.startMonitoring(monitoringConfig.local.interval);
+      console.log('🔍 Local performance monitoring started');
+    }
     
     console.log('✅ Global test setup complete');
   } catch (error) {

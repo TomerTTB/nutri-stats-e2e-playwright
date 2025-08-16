@@ -12,38 +12,72 @@ The performance monitoring system provides comprehensive insights into:
 
 ## 📊 Monitoring Components
 
-### 1. System Performance Monitor
+### 1. System Performance Monitor (Local)
 - **File**: `monitoring/performance-monitor.js`
 - **Purpose**: Tracks system-level resources during test execution
 - **Metrics**: CPU load, memory usage, process memory, uptime
 - **Interval**: 5-second sampling by default
 
-### 2. Test Performance Reporter
+### 2. Test Performance Reporter (Local)
 - **File**: `monitoring/performance-reporter.js`
 - **Purpose**: Tracks individual test performance and resource usage
 - **Metrics**: Test duration, memory delta, failure analysis
 - **Integration**: Built into Playwright reporter system
 
-### 3. Performance Analyzer
+### 3. DataDog Reporter (Cloud)
+- **File**: `monitoring/datadog-reporter.js`
+- **Purpose**: Sends performance metrics to DataDog for cloud monitoring
+- **Metrics**: Real-time metrics, dashboards, alerting
+- **Integration**: APM tracing and custom metrics
+
+### 4. Performance Analyzer
 - **File**: `monitoring/performance-analyzer.js`
 - **Purpose**: Analyzes performance reports and identifies trends
 - **Features**: Issue detection, trend analysis, summary generation
+
+### 5. Monitoring Configuration
+- **File**: `monitoring/monitoring-config.js`
+- **Purpose**: Centralized configuration for all monitoring backends
+- **Features**: Backend selection, validation, reporter management
 
 ## 🚀 Quick Start
 
 ### Running Tests with Performance Monitoring
 
-Performance monitoring is **automatically enabled** for all test runs:
+Performance monitoring is **automatically enabled** for all test runs. You can choose between local monitoring, DataDog, or both:
 
 ```bash
-# Standard test run (monitoring included)
+# Local monitoring only (default)
 npm test
+
+# DataDog monitoring only
+npm run test:datadog
+
+# Both local and DataDog monitoring
+npm run test:both
 
 # View performance reports after test run
 npm run performance:analyze
 
 # Check performance artifacts
 npm run performance:stats
+```
+
+### DataDog Setup (Optional)
+
+```bash
+# Install DataDog dependencies
+npm run datadog:install
+
+# Configure environment variables
+cp .env.datadog .env.test
+# Edit .env.test with your DataDog API key
+
+# Test DataDog connection
+npm run datadog:test
+
+# Run tests with DataDog monitoring
+npm run test:datadog
 ```
 
 ### Manual Performance Analysis
@@ -183,28 +217,54 @@ The GitHub Actions workflow automatically:
 
 ## 🔧 Configuration
 
-### Monitoring Interval
-Adjust monitoring frequency in `global-setup.js`:
-```javascript
-// Monitor every 3 seconds instead of 5
-await global.performanceMonitor.startMonitoring(3000);
+### Monitoring Backend Selection
+Choose your monitoring backend via environment variables:
+
+```bash
+# Local monitoring only (default)
+MONITORING_BACKEND=local
+
+# DataDog monitoring only
+MONITORING_BACKEND=datadog
+
+# Both local and DataDog monitoring
+MONITORING_BACKEND=both
+```
+
+### Local Monitoring Configuration
+```bash
+# Enable/disable local monitoring
+LOCAL_MONITORING=true
+
+# Monitoring interval (milliseconds)
+MONITORING_INTERVAL=5000
+```
+
+### DataDog Configuration
+```bash
+# Enable DataDog monitoring
+DATADOG_ENABLED=true
+DD_API_KEY=your_api_key_here
+DD_SITE=datadoghq.com
+DD_SERVICE=e2e-tests
+DD_ENV=test
+DD_VERSION=1.0.0
+DD_TAGS=team:qa,project:nutristats
+
+# Custom thresholds
+DD_SLOW_TEST_THRESHOLD=10000
+DD_MEMORY_THRESHOLD=100
 ```
 
 ### Report Retention
-Performance reports are stored in `test-artifacts/performance/`:
-- **Local**: Kept until manually cleaned
+- **Local Reports**: `test-artifacts/performance/` - kept until manually cleaned
+- **DataDog**: Real-time dashboards with configurable retention
 - **GitHub Actions**: 30 days retention for performance reports
 
-### Disable Monitoring
-To disable performance monitoring:
-```javascript
-// In playwright.config.js, remove the performance reporter
-reporter: [
-  ['html'],
-  ['json'],
-  // ['./monitoring/performance-reporter.js'] // Comment out this line
-],
-```
+### Configuration Files
+- `.env.datadog` - DataDog-only configuration template
+- `.env.both` - Dual monitoring configuration template
+- `.env.test` - Your active configuration (copy from templates)
 
 ## 📚 Best Practices
 

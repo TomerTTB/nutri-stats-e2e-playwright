@@ -29,7 +29,12 @@
     "performance:analyze": "node monitoring/performance-analyzer.js",
     "performance:monitor": "node monitoring/performance-monitor.js",
     "performance:clean": "rm -rf test-artifacts/performance/*",
-    "performance:stats": "ls -la test-artifacts/performance/ && echo 'Run npm run performance:analyze for detailed analysis'"
+    "performance:stats": "ls -la test-artifacts/performance/ && echo 'Run npm run performance:analyze for detailed analysis'",
+    "test:datadog": "cross-env MONITORING_BACKEND=datadog npm run test",
+    "test:both": "cross-env MONITORING_BACKEND=both npm run test",
+    "test:local": "cross-env MONITORING_BACKEND=local npm run test",
+    "datadog:install": "npm install dd-trace hot-shots",
+    "datadog:test": "echo 'Testing DataDog connection...' && node -e \"console.log('DataDog packages:', require('dd-trace'), require('hot-shots'))\""
   },
   "keywords": [
     "playwright",
@@ -44,5 +49,9 @@
     "cross-env": "^10.0.0",
     "dotenv": "^17.2.1",
     "sqlite3": "^5.1.6"
+  },
+  "optionalDependencies": {
+    "dd-trace": "^5.0.0",
+    "hot-shots": "^10.0.0"
   }
 }

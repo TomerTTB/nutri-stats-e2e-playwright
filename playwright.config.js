@@ -1,5 +1,6 @@
 const { defineConfig, devices } = require('@playwright/test');
 const { authConfig } = require('./config/auth-config');
+const { getReporters, printConfig } = require('./monitoring/monitoring-config');
 
 // Load environment variables from .env.test file
 require('dotenv').config({ path: '.env.test' });
@@ -54,7 +55,7 @@ module.exports = defineConfig({
     ['html', { outputFolder: 'test-artifacts/reports/html-report' }],
     ['json', { outputFile: 'test-artifacts/reports/test-results.json' }],
     ['junit', { outputFile: 'test-artifacts/reports/junit.xml' }],
-    ['./monitoring/performance-reporter.js']
+    ...getReporters()
   ],
   /* Output directory for test artifacts - videos, traces, etc. */
   outputDir: 'test-artifacts/videos',
